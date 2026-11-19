@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>業務範囲（SOW）契約書テンプレート</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @media print {
+      .no-print { display: none !important; }
+      .print-only { display: block !important; }
+    }
+    .print-only { display: none; }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <div class="max-w-7xl mx-auto px-4 py-6">
+    <!-- Header -->
+    <div class="bg-blue-700 text-white rounded-xl p-6 mb-6 no-print">
+      <h1 class="text-2xl font-bold">業務範囲（SOW）契約書テンプレート</h1>
+      <p class="text-blue-100 mt-1 text-sm">フリーランス・外部委託契約の業務範囲定義書を作成します</p>
+    </div>
+
+    <div class="flex flex-col lg:flex-row gap-6">
+      <!-- Left: Input Form -->
+      <div class="lg:w-1/2 no-print">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 space-y-5">
+          <h2 class="text-lg font-semibold text-gray-800 border-b pb-2">契約情報の入力</h2>
+
+          <!-- Basic Info -->
+          <div class="space-y-4">
+            <h3 class="text-sm font-semibold text-gray-600 uppercase tracking-wide">基本情報</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">クライアント名 <span class="text-red-500">*</span></label>
+                <input id="clientName" type="text" placeholder="例：株式会社○○" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">委託者名 <span class="text-red-500">*</span></label>
+                <input id="contractorName" type="text" placeholder="例：山田 太郎" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">プロジェクト名 <span class="text-red-500">*</span></label>
+              <input id="projectName" type="text" placeholder="例：ECサイトリニューアル開発" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">開始日</label>
+                <input id="startDate" type="date" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">終了日</label>
+                <input id="endDate" type="date" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">契約金額</label>
+              <div class="flex items-center gap-2">
+                <input id="contractAmount" type="text" placeholder="例：500,000" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <span class="text-sm text-gray-600 whitespace-nowrap">円（税別）</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Work Description -->
+          <div class="space-y-3">
+            <h3 class="text-sm font-semibold text-gray-600 uppercase tracking-wide">作業内容</h3>
+            <textarea id="workDescription" rows="4" placeholder="委託する作業の詳細を記述してください。&#10;例：フロントエンド開発（React.js）、API設計・実装、データベース設計" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y"></textarea>
+          </div>
+
+          <!-- Deliverables -->
+          <div class="space-y-3">
+            <h3 class="text-sm font-semibold text-gray-600 uppercase tracking-wide">成果物リスト</h3>
+            <div id="deliverablesList" class="space-y-2"></div>
+            <div class="flex gap-2">
+              <input id="newDeliverable" type="text" placeholder="成果物を追加（例：設計書 1式）" class="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <button onclick="addDeliverable()" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700 transition-colors whitespace-nowrap">追加</button>
+            </div>
+          </div>
+
+          <!-- Payment Terms -->
+          <div class="space-y-3">
+            <h3 class="text-sm font-semibold text-gray-600 uppercase tracking-wide">支払い条件</h3>
+            <select id="paymentType" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option value="">支払い方式を選択</option>
+              <option value="完了払い">完了払い（成果物納品後）</option>
+              <option value="前払い">前払い（契約締結後）</option>
+              <option value="分割2回">2回分割（着手時50%・完了時50%）</option>
+              <option value="分割3回">3回分割（着手・中間・完了各33%）</option>
+              <option value="月払い">月払い（毎月末締め翌月払い）</option>
+            </select>
+            <textarea id="paymentNotes" rows="2" placeholder="支払いに関する追記事項（例：振込手数料はクライアント負担）" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y"></textarea>
+          </div>
+
+          <!-- Change Management -->
+          <div class="space-y-3">
+            <h3 class="text-sm font-semibold text-gray-600 uppercase tracking-wide">変更管理プロセス</h3>
+            <select id="changeProcess" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <option value="">変更管理方式を選択</option>
+              <option value="書面合意">書面（メール）による合意が必要</option>
+              <option value="変更指示書">変更指示書（ECO）の発行が必要</option>
+              <option value="口頭+確認書">口頭承認後に確認書を発行</option>
+            </select>
+            <textarea id="changeNotes" rows="2" placeholder="変更管理の補足事項（例：スコープ追加は別途見積もりが必要）" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 resize-y"></textarea>
+          </div>
+
+          <!-- Additional Clauses -->
+          <div class="space-y-3">
+            <h3 class="text-sm font-semibold text-gray-600 uppercase tracking-wide">追加条項</h3>
+            <div class="space-y-2">
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" id="clauseNDA" class="rounded">
+                <span class="text-sm text-gray-700">秘密保持義務（NDA）を含む</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" id="clauseIP" class="rounded">
+                <span class="text-sm text-gray-700">知的財産権の帰属（クライアントに移転）</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" id="clauseWarranty" class="rounded">
+                <span class="text-sm text-gray-700">瑕疵担保責任（納品後3ヶ月）</span>
+              </label>
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" id="clauseNonCompete" class="rounded">
+                <span class="text-sm text-gray-700">競業避止義務を含む</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Action buttons -->
+          <div class="pt-2 flex flex-wrap gap-3">
+            <button onclick="updatePreview()" class="bg-blue-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">プレビュー更新</button>
+            <button onclick="copyToClipboard()" class="bg-green-600 text-white px-5 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors">テキストをコピー</button>
+            <button onclick="clearForm()" class="bg-gray-200 text-gray-700 px-5 py-2 rounded-lg text-sm font-medium hover:bg-gray-300 transition-colors">クリア</button>
+          </div>
+          <div id="copyMsg" class="hidden text-green-600 text-sm font-medium">クリップボードにコピーしました！</div>
+        </div>
+      </div>
+
+      <!-- Right: Preview -->
+      <div class="lg:w-1/2">
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 no-print mb-2">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-lg font-semibold text-gray-800">プレビュー</h2>
+            <span class="text-xs text-gray-500">入力内容がリアルタイムで反映されます</span>
+          </div>
+          <div id="preview" class="font-mono text-xs text-gray-800 bg-gray-50 rounded-lg p-4 leading-relaxed whitespace-pre-wrap border border-gray-200 max-h-[70vh] overflow-y-auto"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // State
+    let deliverables = [];
+
+    function addDeliverable() {
+      const input = document.getElementById('newDeliverable');
+      const val = input.value.trim();
+      if (!val) return;
+      deliverables.push(val);
+      input.value = '';
+      renderDeliverables();
+      updatePreview();
+    }
+
+    function removeDeliverable(idx) {
+      deliverables.splice(idx, 1);
+      renderDeliverables();
+      updatePreview();
+    }
+
+    function renderDeliverables() {
+      const container = document.getElementById('deliverablesList');
+      container.innerHTML = '';
+      deliverables.forEach((item, idx) => {
+        const div = document.createElement('div');
+        div.className = 'flex items-center gap-2 bg-gray-50 rounded-lg px-3 py-2';
+
+        const span = document.createElement('span');
+        span.textContent = '・' + item;
+        span.className = 'flex-1 text-sm text-gray-700';
+
+        const btn = document.createElement('button');
+        btn.textContent = '削除';
+        btn.className = 'text-xs text-red-500 hover:text-red-700 transition-colors';
+        btn.addEventListener('click', () => removeDeliverable(idx));
+
+        div.appendChild(span);
+        div.appendChild(btn);
+        container.appendChild(div);
+      });
+    }
+
+    function getVal(id) {
+      const el = document.getElementById(id);
+      return el ? el.value.trim() : '';
+    }
+
+    function getChecked(id) {
+      const el = document.getElementById(id);
+      return el ? el.checked : false;
+    }
+
+    function formatDate(dateStr) {
+      if (!dateStr) return '____年__月__日';
+      const d = new Date(dateStr);
+      return d.getFullYear() + '年' + (d.getMonth()+1) + '月' + d.getDate() + '日';
+    }
+
+    function updatePreview() {
+      const client = getVal('clientName') || '【クライアント名】';
+      const contractor = getVal('contractorName') || '【委託者名】';
+      const project = getVal('projectName') || '【プロジェクト名】';
+      const start = formatDate(getVal('startDate'));
+      const end = formatDate(getVal('endDate'));
+      const amount = getVal('contractAmount') || '____';
+      const workDesc = getVal('workDescription') || '（作業内容を入力してください）';
+      const payType = getVal('paymentType') || '（支払い方式を選択してください）';
+      const payNotes = getVal('paymentNotes');
+      const changeProcess = getVal('changeProcess') || '（変更管理方式を選択してください）';
+      const changeNotes = getVal('changeNotes');
+
+      const today = new Date();
+      const todayStr = today.getFullYear() + '年' + (today.getMonth()+1) + '月' + today.getDate() + '日';
+
+      let dlStr = '';
+      if (deliverables.length > 0) {
+        dlStr = deliverables.map((d, i) => '  ' + (i+1) + '. ' + d).join('\n');
+      } else {
+        dlStr = '  （成果物を追加してください）';
+      }
+
+      let clauses = '';
+      if (getChecked('clauseNDA')) {
+        clauses += '\n【第7条：秘密保持義務】\n委託者は、本契約の履行に関して知り得たクライアントの機密情報を、第三者に開示・漏洩してはならない。本義務は本契約終了後3年間継続する。\n';
+      }
+      if (getChecked('clauseIP')) {
+        clauses += '\n【第8条：知的財産権の帰属】\n本契約に基づき作成された成果物の著作権その他知的財産権は、納品完了および代金受領をもってクライアントに移転する。\n';
+      }
+      if (getChecked('clauseWarranty')) {
+        clauses += '\n【第9条：瑕疵担保責任】\n委託者は、成果物に瑕疵があった場合、納品日から3ヶ月以内に限り、無償での修補または代替品の提供を行う。\n';
+      }
+      if (getChecked('clauseNonCompete')) {
+        clauses += '\n【第10条：競業避止義務】\n委託者は、本契約期間中および終了後6ヶ月間、クライアントの競合他社に同種のサービスを提供してはならない。\n';
+      }
+
+      const text =
+`════════════════════════════════════════
+業 務 委 託 契 約 書（SOW）
+════════════════════════════════════════
+作成日：${todayStr}
+契約番号：SOW-${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-001
+
+【第1条：当事者情報】
+発注者（クライアント）：${client}
+受注者（委託者）　　　：${contractor}
+
+【第2条：プロジェクト名称】
+${project}
+
+【第3条：契約期間】
+開始日：${start}
+終了日：${end}
+
+【第4条：作業内容（スコープ）】
+${workDesc}
+
+────────────────────────────────────────
+スコープ外の作業は本契約の対象外とし、
+別途見積もり・合意が必要です。
+────────────────────────────────────────
+
+【第5条：成果物】
+${dlStr}
+
+【第6条：契約金額・支払い条件】
+契約金額：${amount}円（税別）
+支払い方式：${payType}${payNotes ? '\n補足：' + payNotes : ''}
+
+【変更管理プロセス】
+${changeProcess}${changeNotes ? '\n補足：' + changeNotes : ''}
+${clauses}
+════════════════════════════════════════
+本契約の成立を証するため、両者署名捺印
+════════════════════════════════════════
+
+発注者（クライアント）署名：________________
+　　　　　　　　　　　日付：________________
+
+受注者（委託者）署名：________________
+　　　　　　　日付：________________
+`;
+
+      const preview = document.getElementById('preview');
+      preview.textContent = text;
+    }
+
+    function copyToClipboard() {
+      const text = document.getElementById('preview').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const msg = document.getElementById('copyMsg');
+        msg.classList.remove('hidden');
+        setTimeout(() => msg.classList.add('hidden'), 2500);
+      }).catch(() => {
+        // fallback
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        const msg = document.getElementById('copyMsg');
+        msg.classList.remove('hidden');
+        setTimeout(() => msg.classList.add('hidden'), 2500);
+      });
+    }
+
+    function clearForm() {
+      ['clientName','contractorName','projectName','startDate','endDate','contractAmount',
+       'workDescription','paymentNotes','changeNotes'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+      ['paymentType','changeProcess'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+      ['clauseNDA','clauseIP','clauseWarranty','clauseNonCompete'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.checked = false;
+      });
+      deliverables = [];
+      renderDeliverables();
+      updatePreview();
+    }
+
+    // Add deliverable on Enter key
+    document.getElementById('newDeliverable').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') addDeliverable();
+    });
+
+    // Live update on all inputs
+    document.querySelectorAll('input, textarea, select').forEach(el => {
+      el.addEventListener('input', updatePreview);
+      el.addEventListener('change', updatePreview);
+    });
+
+    // Initial preview
+    updatePreview();
+  </script>
+</body>
+</html>
